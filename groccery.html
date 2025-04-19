@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Recipe Search</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #fdfdfd;
+      padding: 20px;
+    }
+    h1 {
+      text-align: center;
+    }
+    .search-container {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    input[type="text"] {
+      padding: 10px;
+      width: 300px;
+      font-size: 16px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+    }
+    button {
+      padding: 10px 16px;
+      font-size: 16px;
+      border: none;
+      border-radius: 6px;
+      background-color: #28a745;
+      color: white;
+      cursor: pointer;
+    }
+    .recipe-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 16px;
+      padding: 20px;
+    }
+    .recipe-item {
+      background-color: #f5f5f5;
+      padding: 16px;
+      border-radius: 8px;
+      text-align: center;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+    .recipe-item a {
+      text-decoration: none;
+      color: #333;
+      font-weight: bold;
+      font-size: 18px;
+    }
+    .recipe-item a:hover {
+      color: #28a745;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Recipe Search</h1>
+  
+  <div class="search-container">
+    <input type="text" id="searchInput" placeholder="Search for recipes..." />
+    <button onclick="searchRecipes()">Search</button>
+  </div>
+
+  <div id="recipeList" class="recipe-list"></div>
+
+  <script>
+    const recipes = [
+      { name: "Tomato Pasta", ingredients: ["Pasta", "Tomato Sauce", "Olive Oil", "Garlic"], key: "tomato-pasta" },
+      { name: "Chicken Curry", ingredients: ["Chicken", "Curry Powder", "Coconut Milk", "Garlic"], key: "chicken-curry" },
+      { name: "Vegetable Stir Fry", ingredients: ["Carrot", "Broccoli", "Soy Sauce", "Garlic"], key: "vegetable-stir-fry" },
+      { name: "Paneer Butter Masala", ingredients: ["Paneer", "Tomato Puree", "Butter", "Cream", "Spices"], key: "paneer-butter-masala" },
+      { name: "Mushroom Risotto", ingredients: ["Mushroom", "Arborio Rice", "Vegetable Broth", "Parmesan"], key: "mushroom-risotto" },
+      { name: "Grilled Cheese Sandwich", ingredients: ["Bread", "Cheese", "Butter"], key: "grilled-cheese" },
+      { name: "Aloo Paratha", ingredients: ["Wheat Flour", "Potato", "Garam Masala", "Butter"], key: "aloo-paratha" },
+      { name: "Egg Fried Rice", ingredients: ["Rice", "Eggs", "Spring Onion", "Soy Sauce"], key: "egg-fried-rice" },
+      { name: "Fruit Salad", ingredients: ["Apple", "Banana", "Orange", "Honey", "Lemon Juice"], key: "fruit-salad" },
+      { name: "Oats Porridge", ingredients: ["Oats", "Milk", "Honey", "Almonds"], key: "oats-porridge" },
+      { name: "Palak Paneer", ingredients: ["Spinach", "Paneer", "Garlic", "Cream", "Spices"], key: "palak-paneer" },
+      { name: "Biryani", ingredients: ["Basmati Rice", "Chicken", "Yogurt", "Spices", "Onion"], key: "biryani" },
+      { name: "Rava Upma", ingredients: ["Rava", "Mustard Seeds", "Curry Leaves", "Green Chili", "Vegetables"], key: "upma" },
+      { name: "Avocado Toast", ingredients: ["Bread", "Avocado", "Lemon Juice", "Chili Flakes"], key: "avocado-toast" },
+      { name: "Hakka Noodles", ingredients: ["Noodles", "Bell Peppers", "Soy Sauce", "Vinegar", "Spring Onion"], key: "hakka-noodles" },
+      { name: "Shakshuka", ingredients: ["Eggs", "Tomato", "Onion", "Garlic", "Spices"], key: "shakshuka" },
+      { name: "Pancakes", ingredients: ["Flour", "Milk", "Eggs", "Sugar", "Baking Powder"], key: "pancakes" },
+      { name: "Rajma Chawal", ingredients: ["Rajma", "Rice", "Onion", "Tomato", "Spices"], key: "rajma-chawal" },
+      { name: "Chole Bhature", ingredients: ["Chickpeas", "Flour", "Curd", "Onion", "Spices"], key: "chole-bhature" },
+      { name: "Pesto Pasta", ingredients: ["Pasta", "Basil", "Garlic", "Olive Oil", "Parmesan"], key: "pesto-pasta" }
+    ];
+
+    function searchRecipes() {
+      const searchQuery = document.getElementById('searchInput').value.toLowerCase();
+      const filteredRecipes = recipes.filter(recipe =>
+        recipe.name.toLowerCase().includes(searchQuery)
+      );
+
+      const recipeList = document.getElementById('recipeList');
+      recipeList.innerHTML = '';
+
+      if (filteredRecipes.length === 0) {
+        recipeList.innerHTML = '<p style="grid-column: 1 / -1;">No recipes found.</p>';
+        return;
+      }
+
+      filteredRecipes.forEach(recipe => {
+        const div = document.createElement('div');
+        div.className = 'recipe-item';
+        div.innerHTML = `<a href="recipe-details.html?recipe=${recipe.key}">${recipe.name}</a>`;
+        recipeList.appendChild(div);
+      });
+    }
+
+    window.onload = searchRecipes;
+  </script>
+
+</body>
+</html>
